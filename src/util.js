@@ -8,7 +8,7 @@ const casesTypeColors = {
   },
   recovered: {
     hex: "#7dd71d",
-    multiplier: 1200,
+    multiplier: 500,
   },
   deaths: {
     hex: "#fb4443",
@@ -33,6 +33,9 @@ export const sortData = (data) => {
 
   return sortedData;
 };
+
+export const prettyPrintStat = (stat) =>
+  stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
 export const showDataOnMap = (data, casesType = "cases") =>
   data.map((country) => (
