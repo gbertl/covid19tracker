@@ -67,6 +67,7 @@ const buildChartData = (data, casesType) => {
 
 const LineGraph = ({ casesType = "cases" }) => {
   const [data, setData] = useState({});
+  const [lineColor, setLineColor] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,12 +77,21 @@ const LineGraph = ({ casesType = "cases" }) => {
       response = await response.json();
       let chartData = buildChartData(response, casesType);
 
-      console.log(chartData);
-
       setData(chartData);
     };
 
     fetchData();
+
+    switch (casesType) {
+      case "recovered":
+        setLineColor(["#9de74f", "#7dd71d"]);
+        break;
+      case "deaths":
+        setLineColor(["#b6b6b6", "#9e9e9e"]);
+        break;
+      default:
+        setLineColor(["#ef3558", "#cc1034"]);
+    }
   }, [casesType]);
 
   return (
@@ -91,8 +101,8 @@ const LineGraph = ({ casesType = "cases" }) => {
           data={{
             datasets: [
               {
-                backgroundColor: "rgba(204, 16, 52, 0.5)",
-                borderColor: "#CC1034",
+                backgroundColor: lineColor[0],
+                borderColor: lineColor[1],
                 data: data,
               },
             ],
